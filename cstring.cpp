@@ -24,3 +24,11 @@ void String::print() {
         std::cout << content[i];
     }
 }
+
+char & String::charAt(int i){
+    if(i>=length()){
+        throw "index of of bound!";
+    }else{
+        return const_cast<char &>(content[i]);
+    }
+}
