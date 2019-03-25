@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <cstdio>
+#include <iostream>
+#include <cstring>
 #include "cstring.h"
 
 String::String():content("\0"){}
@@ -52,5 +54,51 @@ char & String::charAt(int i){
     }else{
         return const_cast<char &>(content[i]);
     }
+}
+/**
+ * content getter
+ * @return content
+ */
+const char* String::getContent(){
+    return content;
+}
+/**
+ * compares a String with another
+ * @param s the second string
+ * @return whether they are equal or not
+ */
+bool String::equals(String* s) {
+    if(s->length()&&this->length()){
+
+        for(int i = 0; i< this->length();i++){
+            if(s->getContent()[i]!=this->getContent()[i]){
+                return false;
+            }
+        }
+        return true;
+    }else{
+        return false;
+    }
+
+}
+
+/**
+ * compares a String with a const char*
+ * @param s the second string
+ * @return whether they are equal or not
+ */
+bool String::equals(const char *s) {
+    if(std::strlen(s)&&this->length()){
+
+        for(int i = 0; i< this->length();i++){
+            if(s[i]!=this->getContent()[i]){
+                return false;
+            }
+        }
+        return true;
+    }else{
+        return false;
+    }
+
 }
 
