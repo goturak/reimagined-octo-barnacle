@@ -6,9 +6,17 @@
 
 String::String():content("\0"){}
 
-String::String(char chars[]):content(chars){}
 
-String::String(String* string):content(string->content){}
+/**
+ * Constructor with a char array as parameter
+ * @param chars the chars that make a string
+ */
+String::String(char chars[]){
+    this->content = (char*)malloc(strlen(chars));
+    std::strcpy(this->content, chars);
+}
+
+
 
 String::String(char c):content(){
     char out_string[2];
@@ -101,4 +109,24 @@ bool String::equals(const char *s) {
     }
 
 }
+
+/**
+ * Setter of the content taking a char array.
+ * @param chars the new content of the string.
+ */
+void String::setContent(char chars []){
+    free(this->content);
+    this->content = (char*)malloc(strlen(chars));
+    strcpy(this->content, chars);
+}
+
+/**
+ * Setter of the content taking a char array.
+ * @param chars the new content of the string.
+ */
+void String::setContent(String* string){
+    String::setContent(string->content);
+}
+
+
 
