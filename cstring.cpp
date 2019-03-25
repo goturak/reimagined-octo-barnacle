@@ -16,7 +16,13 @@ String::String(char chars[]){
     std::strcpy(this->content, chars);
 }
 
-
+/**
+ * Copy constructor
+ * @param string the other string we want to copy.
+ */
+String::String(String* string){
+    String(string->content);
+}
 
 String::String(char c):content(){
     char out_string[2];
