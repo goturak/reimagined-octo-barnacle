@@ -3,4 +3,4 @@ project(POO2LabString)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(POO2LabString main.cpp)
+add_executable(POO2LabString main.cpp cstring.cpp cstring.h)
