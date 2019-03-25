@@ -36,3 +36,11 @@ String::String(bool b){
     }
 
 }
+
+int String::length() { return std::strlen(content);}
+
+void String::print() {
+    for(int i = 0; i< this->length();i++){
+        std::cout << content[i];
+    }
+}

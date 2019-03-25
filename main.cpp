@@ -2,8 +2,8 @@
 #include "cstring.h"
 
 int main() {
-    const char* c = (String("TEST").content);
-    char cha = c[5];
-    const char* vide = String().content;
+    char array[] = "One, good, thing, about, music";
+    String* test= new String(array);
+    test->print();
     return 0;
 }
