@@ -34,6 +34,9 @@ public:
     int length();
     void print();
     char & charAt(int i);
+    const char* getContent();
+    bool equals(String* s);
+    bool equals(const char* s);
 };
 
 
