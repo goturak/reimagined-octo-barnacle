@@ -24,6 +24,8 @@ public:
 
     explicit String(bool b);
 
+    int length();
+    void print();
 };
 
 
