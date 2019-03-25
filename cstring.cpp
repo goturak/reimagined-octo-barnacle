@@ -14,9 +14,8 @@ String::String():content("\0"){}
  * @param chars the chars that make a string
  */
 String::String(char chars[]){
-    this->content = (char*)malloc(40);
+    this->content = (char*)malloc(strlen(chars));
     std::strcpy(this->content, chars);
-
 }
 
 /**
@@ -141,7 +140,7 @@ bool String::equals(const char *s) {
  */
 void String::setContent(char chars []){
     free(this->content);
-    this->content = (char*)malloc(40);
+    this->content = (char*)malloc(strlen(chars));
     strcpy(this->content, chars);
 }
 
