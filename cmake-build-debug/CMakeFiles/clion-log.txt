@@ -1,1 +1,4 @@
-CMakeLists.txt not found in /home/guillaume/POO2/reimagined-octo-barnacle Select CMakeLists.txt file...
+/home/guillaume/clion-2018.3.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/guillaume/POO2/reimagined-octo-barnacle
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/guillaume/POO2/reimagined-octo-barnacle/cmake-build-debug
