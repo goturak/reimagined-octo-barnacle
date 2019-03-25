@@ -102,3 +102,16 @@ bool String::equals(const char *s) {
 
 }
 
+void String::concat(String *s) {
+    int totalLen= this->length()+s->length();
+    char prevContent[this->length()];
+    std::strcpy(prevContent,this->getContent());
+
+
+    realloc((void*)this->content,totalLen);
+    std::strcpy(this->content,prevContent);
+    std::strcat(this->content,s->getContent());
+
+
+}
+

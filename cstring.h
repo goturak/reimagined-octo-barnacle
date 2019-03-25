@@ -8,8 +8,9 @@
 
 class String {
 private:
+    char * content;
 public:
-    const char * content;
+
 
     explicit String();
 
@@ -31,6 +32,9 @@ public:
     const char* getContent();
     bool equals(String* s);
     bool equals(const char* s);
+
+    void concat(String* s);
+    void concat(const char* s);
 };
 
 
