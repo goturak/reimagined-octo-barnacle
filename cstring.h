@@ -27,6 +27,7 @@ public:
 
     int length();
     void print();
+    char & charAt(int i);
 };
 
 
