@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/POO2LabString.dir/main.cpp.o CMakeFiles/POO2LabString.dir/cstring.cpp.o  -o POO2LabString 

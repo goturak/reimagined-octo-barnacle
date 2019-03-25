@@ -8,10 +8,8 @@
 
 class String {
 private:
-
-    char * content;
-
 public:
+    const char * content;
 
     explicit String();
 
@@ -26,10 +24,6 @@ public:
     explicit String(float f);
 
     explicit String(bool b);
-
-    void setContent(char chars[]);
-
-    void setContent(String* string);
 
     int length();
     void print();
