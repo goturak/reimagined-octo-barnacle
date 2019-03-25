@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/guillaume/POO2/reimagined-octo-barnacle/cstring.h
+
+/home/guillaume/POO2/reimagined-octo-barnacle/main.cpp
+iostream
+-
+cstring.h
+/home/guillaume/POO2/reimagined-octo-barnacle/cstring.h
+
