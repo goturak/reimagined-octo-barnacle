@@ -8,8 +8,9 @@
 
 class String {
 private:
-    const char * content;
 public:
+    const char * content;
+
     explicit String();
 
     explicit String(char chars[]);
