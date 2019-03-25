@@ -6,7 +6,23 @@
 #define POO2LABSTRING_CSTRING_H
 
 
-class cstring {
+class String {
+private:
+    const char * content;
+public:
+    explicit String();
+
+    explicit String(char chars[]);
+
+    explicit String(String* string);
+
+    explicit String(char c);
+
+    explicit String(int i);
+
+    explicit String(float f);
+
+    explicit String(bool b);
 
 };
 
