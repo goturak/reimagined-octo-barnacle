@@ -13,5 +13,7 @@ int main() {
     tes2t->print();
     std::cout << std::endl;
     test->substring(1,6).print();
+    test->setInputAsContent();
+    test->print();
     return 0;
 }

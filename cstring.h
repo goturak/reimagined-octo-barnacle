@@ -8,9 +8,9 @@
 
 class String {
 private:
-public:
     char * content;
 
+public:
     explicit String();
 
     explicit String(char chars[]);
@@ -33,6 +33,7 @@ public:
     bool equals(char* s);
     void setContent(char chars[]);
     void setContent(String* string);
+    void setInputAsContent();
     String substring(int i, int j);
 };
 
