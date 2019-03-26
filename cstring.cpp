@@ -158,6 +158,12 @@ void String::setContent(String* string){
     String::setContent(string->content);
 }
 
+/**
+ * Method used to make a subset of the string from one index to another
+ * @param i the starting index of the string
+ * @param j the ending index of the string (exclusive)
+ * @return the new string created with this method.
+ */
 String String::substring(int i, int j){
     char chars[j-i];
     for(int k = 0; k < j-i; k++){
