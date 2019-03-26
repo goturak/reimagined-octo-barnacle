@@ -173,5 +173,12 @@ String String::substring(int i, int j){
 
 }
 
-
+/**
+ * Setter that take the input of the user to set the new content of the string
+ */
+void String::setInputAsContent() {
+    char chars[255];
+    scanf("%[^\n]%*c", chars);
+    this->setContent(chars);
+}
 
