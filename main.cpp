@@ -1,5 +1,5 @@
 #include <iostream>
-#include "cstring.h"
+#include "cstring.hpp"
 
 int main() {
     char array[] = "One, good, thing, about, music";
@@ -11,15 +11,16 @@ int main() {
     //TOUT LAISSER
     // printf(test->getContent());
     String* empty= new String(array);
-    int bite= empty->length();
-   // test->append(array2);
+    int bite = empty->getLength();
+    std::cout << bite;
+    String tes2t = test->concat(array2);
 
-    String tes2t= test->concat(array2);
+    test->append(array2);
     tes2t.print();
 
-   // printf(test->getContent());
+    printf(test->getContent());
     test->print();
-    tes2t->print();
+    tes2t.print();
     std::cout << std::endl;
     test->substring(1,6).print();
     test->setInputAsContent();
