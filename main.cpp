@@ -11,5 +11,7 @@ int main() {
    // printf(test->getContent());
     test->print();
     tes2t->print();
+    std::cout << std::endl;
+    test->substring(1,6).print();
     return 0;
 }
