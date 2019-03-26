@@ -32,8 +32,10 @@ public:
     const char* getContent();
     bool equals(String* s);
 
-    void concat(String* s);
-    void concat(const char* s);
+    String concat(String *s);
+    String concat(const char *s);
+    void append(String *s);
+    void append(const char *s);
 
     bool equals(char* s);
     void setContent(char chars[]);

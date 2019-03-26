@@ -140,18 +140,39 @@ bool String::equals(char *s) {
 
 }
 
+/**
+ * appends a String in place
+ * @param s the String to append
+ */
 
-void String::concat(String *s) {
+void String::append(String *s) {
     int totalLen= this->length()+s->length();
-    char prevContent[this->length()];
-    std::strcpy(prevContent,this->getContent());
+
+    char newContent[totalLen];
 
 
-    realloc((void*)this->content,totalLen);
-    std::strcpy(this->content,prevContent);
-    std::strcat(this->content,s->getContent());
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s->getContent());
+
+    this->setContent( newContent);
+}
+
+/**
+ * appends a const char s in place
+ * @param s the const char to append
+ */
 
 
+void String::append(const char *s) {
+    int totalLen= this->length()+std::strlen(s);
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s);
+
+    this->setContent( newContent);
 }
 
 
@@ -187,6 +208,43 @@ String String::substring(int i, int j){
     return *(new String(chars));
 
 }
+
+/**
+ * concatenates a String s and returns a new String
+ * @param s the String to concatenate
+ */
+String String::concat(String *s) {
+    int totalLen= this->length()+s->length();
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s->getContent());
+
+    return *(new String(newContent));
+
+}
+
+/**
+ * concatenates a const char s and returns a new String
+ * @param s the const char to concatenate
+ */
+String String::concat(const char *s) {
+    int totalLen= this->length()+std::strlen(s);
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s);
+
+    return *(new String(newContent));
+
+}
+
+
+
 
 
 
