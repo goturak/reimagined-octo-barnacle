@@ -33,6 +33,7 @@ public:
     bool equals(char* s);
     void setContent(char chars[]);
     void setContent(String* string);
+    String substring(int i, int j);
 };
 
 

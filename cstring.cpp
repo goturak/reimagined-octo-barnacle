@@ -4,7 +4,7 @@
 #include <cstring>
 #include "cstring.h"
 
-String::String():content("\0"){}
+String::String():content(""){}
 
 
 /**
@@ -156,6 +156,15 @@ void String::setContent(char chars []){
  */
 void String::setContent(String* string){
     String::setContent(string->content);
+}
+
+String String::substring(int i, int j){
+    char chars[j-i];
+    for(int k = 0; k < j-i; k++){
+        chars[k] = this->charAt(k+i);
+    }
+    return *(new String(chars));
+
 }
 
 
