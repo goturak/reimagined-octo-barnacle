@@ -93,6 +93,7 @@ char & String::charAt(int i){
         return const_cast<char &>(content[i]);
     }
 }
+
 /**
  * content getter
  * @return content
@@ -100,6 +101,7 @@ char & String::charAt(int i){
 const char* String::getContent(){
     return content;
 }
+
 /**
  * compares a String with another
  * @param s the second string
@@ -107,7 +109,6 @@ const char* String::getContent(){
  */
 bool String::equals(String* s) {
     if(s->length()&&this->length()){
-
         for(int i = 0; i< this->length();i++){
             if(s->getContent()[i]!=this->getContent()[i]){
                 return false;
@@ -117,7 +118,6 @@ bool String::equals(String* s) {
     }else{
         return false;
     }
-
 }
 
 /**
@@ -138,6 +138,38 @@ bool String::equals(char *s) {
         return false;
     }
 
+}
+
+/**
+ * appends a String in place
+ * @param s the String to append
+ */
+void String::append(String *s) {
+    int totalLen= this->length()+s->length();
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s->getContent());
+
+    this->setContent( newContent);
+}
+
+/**
+ * appends a const char s in place
+ * @param s the const char to append
+ */
+void String::append(const char *s) {
+    int totalLen= this->length()+std::strlen(s);
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s);
+
+    this->setContent( newContent);
 }
 
 /**
@@ -174,6 +206,40 @@ String String::substring(int i, int j){
 }
 
 /**
+ * concatenates a String s and returns a new String
+ * @param s the String to concatenate
+ */
+String String::concat(String *s) {
+    int totalLen= this->length()+s->length();
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s->getContent());
+
+    return *(new String(newContent));
+
+}
+
+/**
+ * concatenates a const char s and returns a new String
+ * @param s the const char to concatenate
+ */
+String String::concat(const char *s) {
+    int totalLen= this->length()+std::strlen(s);
+
+    char newContent[totalLen];
+
+
+    std::strcpy(newContent,this->getContent());
+    std::strcat(newContent,s);
+
+    return *(new String(newContent));
+
+}
+
+/**
  * Setter that take the input of the user to set the new content of the string
  */
 void String::setInputAsContent() {
@@ -181,4 +247,5 @@ void String::setInputAsContent() {
     scanf("%[^\n]%*c", chars);
     this->setContent(chars);
 }
+
 

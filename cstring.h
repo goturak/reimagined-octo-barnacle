@@ -9,6 +9,8 @@
 class String {
 private:
     char * content;
+public:
+
 
 public:
     explicit String();
@@ -30,11 +32,18 @@ public:
     char & charAt(int i);
     const char* getContent();
     bool equals(String* s);
+
+    String concat(String *s);
+    String concat(const char *s);
+    void append(String *s);
+    void append(const char *s);
+
     bool equals(char* s);
     void setContent(char chars[]);
     void setContent(String* string);
     void setInputAsContent();
     String substring(int i, int j);
+
 };
 
 
