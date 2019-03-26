@@ -9,7 +9,7 @@
 class String {
 private:
 public:
-    const char * content;
+    char * content;
 
     explicit String();
 
@@ -30,7 +30,9 @@ public:
     char & charAt(int i);
     const char* getContent();
     bool equals(String* s);
-    bool equals(const char* s);
+    bool equals(char* s);
+    void setContent(char chars[]);
+    void setContent(String* string);
 };
 
 
