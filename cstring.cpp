@@ -12,7 +12,9 @@ String::String(){
     this->length = 0;
 }
 
-String::~String() {}
+String::~String() {
+    delete[](this->content);
+}
 
 /**
  * Constructor with a char array as parameter
@@ -20,7 +22,7 @@ String::~String() {}
  */
 String::String(const char chars[]){
     this->length = strlen(chars);
-    this->content = (char*)malloc(this->length);
+    this->content = new char[this->length];
     std::strcpy(this->content, chars);
 }
 
@@ -29,7 +31,9 @@ String::String(const char chars[]){
  * @param string the other string we want to copy.
  */
 String::String(const String& string){
-    String(string.content);
+    this->length = string.getLength();
+    this->content = (char*)malloc(this->length);
+    strcpy(this->content,string.getContent());
 }
 
 /**
@@ -37,12 +41,10 @@ String::String(const String& string){
  * @param c the character we make a string with
  */
 String::String(const char c){
-    this->length = 2;
-    char out_string[2];
-    out_string[0] = c;
-    out_string[1] = '\0';
-    this->content = out_string;
-
+    this->length = 1;
+    this->content = new char[2];
+    this->content[0] = c;
+    this->content[1] = '\0';
 }
 
 /**
@@ -50,21 +52,17 @@ String::String(const char c){
  * @param i the int we make a string with
  */
 String::String(const int i){
-    char out_string[255];
-    sprintf(out_string, "%d", i);
-    this->length = strlen(out_string);
-    this->content = out_string;
+    this->content = new char[255];
+    this->length = sprintf(this->content, "%d", i);
 }
 
 /**
- * Constructor taking a float
+ * Constructor taking a double
  * @param f the float we want to make a string with
  */
-String::String(const float f){
-    char out_string[255];
-    sprintf(out_string, "%lf", f);
-    this->length = strlen(out_string);
-    this->content = out_string;
+String::String(const double d){
+    this->content = new char[255];
+    this->length = sprintf(this->content, "%lf", d);
 }
 
 /**
@@ -73,11 +71,11 @@ String::String(const float f){
  */
 String::String(const bool b){
     if(b){
-        this->content = String("true").content;
-        this->length = 5;
+        this->content = "true";
+        this->length = 4;
     } else {
-        this->content = String("false").content;
-        this->length = 6;
+        this->content = "false";
+        this->length = 5;
     }
 
 }
@@ -162,7 +160,7 @@ bool String::equals(const char *s) const{
 void String::append(const String& s){
     int totalLen = this->length + s.getLength();
 
-    char newContent[totalLen+1];
+    char newContent[totalLen];
 
     std::strcpy(newContent,this->getContent());                    //ON VERRA SI ON CHANGE LE TRUC OU PAS
     std::strcat(newContent,s.getContent());
@@ -177,7 +175,7 @@ void String::append(const String& s){
 void String::append(const char* s){
     int totalLen = this->length + std::strlen(s);
 
-    char newContent[totalLen+1];
+    char newContent[totalLen];
 
     std::strcpy(newContent,this->getContent());
     std::strcat(newContent,s);
@@ -190,9 +188,10 @@ void String::append(const char* s){
  * @param chars the new content of the string.
  */
 String& String::setContent(const char* chars){
-    free(this->content);
+    delete[](this->content);
     this->content = (char*)malloc(strlen(chars));
     strcpy(this->content, chars);
+    this->length = strlen(chars);
     return *this;
 }
 
@@ -226,7 +225,7 @@ String& String::substring(int i, int j) const{
 String& String::concat(const String& s){
     int totalLen = this->length + s.getLength();
 
-    char newContent[totalLen+1];
+    char newContent[totalLen];
 
     std::strcpy(newContent,this->getContent());
     std::strcat(newContent,s.getContent());
@@ -242,11 +241,11 @@ String& String::concat(const String& s){
 String& String::concat(const char* s){
     int totalLen = this->length + std::strlen(s);
 
-    char newContent[totalLen+1];
+    char newContent[totalLen];
 
     std::strcpy(newContent,this->getContent());
     std::strcat(newContent,s);
-
+    this->length = totalLen;
     return this->setContent(newContent);
 
 }
@@ -288,12 +287,10 @@ bool String::operator==(const char * c) const{
 }
 
 String& String::operator=(const String & s){
-    this->setContent(s);
-    return *this;
+    return *(new String(s));
 }
 String& String::operator=(const char * c){
-    this->setContent(c);
-    return *this;
+    return *(new String(c));
 }
 
 std::ostream& operator<<(std::ostream & out,const String& s){

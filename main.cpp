@@ -2,29 +2,37 @@
 #include "cstring.hpp"
 
 int main() {
-    char array[] = "One, good, thing, about, music";
-    char array2[] = "Eat Shit and Die";
-    String* test= new String(array);
+    /**
+     * Test des constructeurs
+     */
+    char array[] = "This is a test";
+    int i = 0;
+    float d = 2.0;
+    bool b = true;
+    char c = 'a';
 
-    //test->charAt(2)= '4';
-    std::cout<< test->equals(array2)<<std::endl;
-    //TOUT LAISSER
-    // printf(test->getContent());
-    String* empty= new String(array);
-    int bite = empty->getLength();
-    std::cout << bite;
-    String tes2t = test->concat(array2);
+    String* empty = new String();
+    String* sChars = new String(array);
+    String* sString = new String(*sChars);
+    String* sDouble = new String(d);
+    String* sInt = new String(i);
+    String* sBool = new String(b);
+    String* sChar = new String(c);
 
-    test->append(array2);
-    tes2t.print();
+    std::cout << empty->getContent() << " " << empty->getLength() << std::endl;
+    std::cout << sChars->getContent() << " " << sChars->getLength() << std::endl;
+    std::cout << sString->getContent() << " " << sString->getLength() << std::endl;
+    std::cout << sInt->getContent() << " " << sInt->getLength() << std::endl;
+    std::cout << sDouble->getContent() << " " << sDouble->getLength() << std::endl;
+    std::cout << sBool->getContent() << " " << sBool->getLength() << std::endl;
+    std::cout << sChar->getContent() << " " << sChar->getLength() << std::endl;
 
-    printf(test->getContent());
-    test->print();
-    tes2t.print();
-    std::cout << std::endl;
-    test->substring(1,6).print();
-    test->setInputAsContent();
-    test->print();
+    /**
+     * Test du constructeur de copie
+     */
+    
+
+
 
     return 0;
 }

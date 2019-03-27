@@ -22,7 +22,7 @@ public:
 
     explicit String(const int i);
 
-    explicit String(const float f);
+    explicit String(const double d);
 
     explicit String(const bool b);
 
