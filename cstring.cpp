@@ -4,79 +4,103 @@
 #include <cstring>
 #include "cstring.hpp"
 
-String::String():content(""){}
+/**
+ * Constructor of empty String
+ */
+String::String() {
+    content = new char[1];
+    content[0] = '\0';
+    length = 0;
+}
 
+/**
+ * Destructor of the string
+ */
+String::~String() {
+    delete[](content);
+}
 
 /**
  * Constructor with a char array as parameter
  * @param chars the chars that make a string
  */
-String::String(char chars[]){
-    this->content = (char*)malloc(strlen(chars));
-    std::strcpy(this->content, chars);
+String::String(const char chars[]) {
+    length = strlen(chars);
+    content = new char[length];
+    strcpy(content, chars);
 }
 
 /**
  * Copy constructor
  * @param string the other string we want to copy.
  */
-String::String(String* string){
-    String(string->content);
+String::String(const String &string) {
+    length = string.getLength();
+    content = new char[length];
+    strcpy(content, string.getContent());
 }
 
 /**
  * Constructor taking a single character
  * @param c the character we make a string with
  */
-String::String(char c):content(){
-    char out_string[2];
-    out_string[0] = c;
-    out_string[1] = '\0';
-    this->content = out_string;
-
+String::String(const char c) {
+    length = 1;
+    content = new char[2];
+    content[0] = c;
+    content[1] = '\0';
 }
 
 /**
  * Constructor taking an int
  * @param i the int we make a string with
  */
-String::String(int i){
-    char out_string[20];
-    sprintf(out_string, "%d", i);
-    this->content = out_string;
+String::String(const int i) {
+    content = new char[255];
+    length = sprintf(content, "%d", i);
 }
 
 /**
- * Constructor taking a float
+ * Constructor taking a double
  * @param f the float we want to make a string with
  */
-String::String(float f){
-    char out_string[20];
-    sprintf(out_string, "%lf", f);
-    this->content = out_string;
+String::String(const double d) {
+    content = new char[255];
+    length = sprintf(content, "%lf", d);
 }
 
 /**
  * Constructor taking a boolean
  * @param b the boolean we want to make a string with
  */
-String::String(bool b){
-    if(b){
-        this->content = String("true").content;
+String::String(const bool b) {
+    if (b) {
+        char array[] = "true";
+        length = 4;
+        content = new char[length];
+        strcpy(content, array);
     } else {
-        this->content = String("false").content;
+        char array[] = "false";
+        length = 5;
+        content = new char[length];
+        strcpy(content, array);
     }
 
 }
 
 /**
  * Method returning the length of the string
- * @return
+ * @return the length of the current string
  */
-int String::length() const { return std::strlen(content);}
+size_t String::getLength() const {
+    return length;
+}
 
-void String::print() const{
-    for(int i = 0; i< this->length();i++){
+/**
+ * Print method
+ */
+void String::print() const {
+    for (int i = 0; i < length; i++) {
         std::cout << content[i];
     }
 }
@@ -86,11 +110,11 @@ void String::print() const{
  * @param i the index of the char
  * @return the char at the index
  */
-char & String::charAt(int i) const{
-    if(i>=length()){
+const char &String::charAt(const int i) const {
+    if (i >= length) {
         throw "index of of bound!";
-    }else{
-        return const_cast<char &>(content[i]);
+    } else {
+        return content[i];
     }
 }
 
@@ -98,7 +122,7 @@ char & String::charAt(int i) const{
  * content getter
  * @return content
  */
-char* String::getContent() const{
+const char *String::getContent() const {
     return content;
 }
 
@@ -107,15 +131,15 @@ char* String::getContent() const{
  * @param s the second string
  * @return whether they are equal or not
  */
-bool String::equals(String* s) const{
-    if(s->length()&&this->length()){
-        for(int i = 0; i< this->length();i++){
-            if(s->getContent()[i]!=this.getContent()[i]){
+bool String::equals(const String &s) const {
+    if (s.getLength() == length) {
+        for (int i = 0; i < length; i++) {
+            if (s.getContent()[i] != getContent()[i]) {
                 return false;
             }
         }
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -125,69 +149,77 @@ bool String::equals(String* s) const{
  * @param s the second string
  * @return whether they are equal or not
  */
-bool String::equals(char *s) const{
-    if(std::strlen(s)&&this->length()){
+bool String::equals(const char *s) const {
+    if (std::strlen(s) == length) {
 
-        for(int i = 0; i< this->length();i++){
-            if(s[i]!=this->getContent()[i]){
+        for (int i = 0; i < length; i++) {
+            if (s[i] != getContent()[i]) {
                 return false;
             }
         }
         return true;
-    }else{
+    } else {
         return false;
     }
 
 }
 
 /**
- * appends a String in place
+ * appends a String
  * @param s the String to append
+ * @return this string concatenate with s
  */
-void String::append(String *s) const{
-    int totalLen= this->length()+s->length();
+String &String::append(const String &s) {
+    int totalLen = length + s.getLength();
 
     char newContent[totalLen];
 
+    std::strcpy(newContent, getContent());
+    std::strcat(newContent, s.getContent());
 
-    std::strcpy(newContent,this->getContent());
-    std::strcat(newContent,s->getContent());
-
-    this->setContent( newContent);
+    return setContent(newContent);
 }
 
 /**
- * appends a const char s in place
+ * appends a const char s
  * @param s the const char to append
+ * @return this string concatenate to s
  */
-void String::append(const char *s) const{
-    int totalLen= this->length()+std::strlen(s);
+String &String::append(const char *s) {
+    int totalLen = length + std::strlen(s);
 
     char newContent[totalLen];
 
+    std::strcpy(newContent, getContent());
+    std::strcat(newContent, s);
 
-    std::strcpy(newContent,this->getContent());
-    std::strcat(newContent,s);
-
-    this->setContent( newContent);
+    return setContent(newContent);
 }
 
 /**
  * Setter of the content taking a char array.
  * @param chars the new content of the string.
+ * @return this
  */
-void String::setContent(char chars []){
-    free(this->content);
-    this->content = (char*)malloc(strlen(chars));
-    strcpy(this->content, chars);
+String &String::setContent(const char *chars) {
+    if (!(chars == content)) {
+        delete[](content);
+        content = new char[strlen(chars)];
+        strcpy(content, chars);
+        length = strlen(chars);
+        return *this;
+    } else {
+        return *this;
+    }
 }
 
 /**
  * Setter of the content taking a char array.
  * @param chars the new content of the string.
+ * @return this
  */
-void String::setContent(String* string) const{
-    String::setContent(string->content);
+String &String::setContent(const String &string) {
+    return String::setContent(string.content);
 }
 
 /**
@@ -196,76 +228,147 @@ void String::setContent(String* string) const{
  * @param j the ending index of the string (exclusive)
  * @return the new string created with this method.
  */
-String& String::substring(int i, int j) const{
-    char chars[j-i];
-    for(int k = 0; k < j-i; k++){
-        chars[k] = this->charAt(k+i);
+String &String::substring(int i, int j) const {
+    if (i < j) {
+        char *chars = new char[j - i];
+        for (int k = 0; k < j - i; k++) {
+            chars[k] = charAt(k + i);
+        }
+        String *result = new String(chars);
+        return *result;
+    } else {
+        String *result = new String();
+        return *result;
     }
-    return *(new String(chars));
-
-}
-
-/**
- * concatenates a String s and returns a new String
- * @param s the String to concatenate
- */
-String& String::concat(String& s) const{
-    int totalLen= this->length()+s.length();
-
-    char newContent[totalLen];
-
-
-    std::strcpy(newContent,this->getContent());
-    std::strcat(newContent,s.getContent());
-
-    return *(new String(newContent));
-
-}
-
-/**
- * concatenates a const char s and returns a new String
- * @param s the const char to concatenate
- */
-String& String::concat(const char *s) const{
-    int totalLen= this->length()+std::strlen(s);
-
-    char newContent[totalLen];
-
-
-    std::strcpy(newContent,this->getContent());
-    std::strcat(newContent,s);
-
-    return *(new String(newContent));
 
 }
 
 /**
  * Setter that take the input of the user to set the new content of the string
+ * @return this
  */
-void String::setInputAsContent() const{
+String &String::setInputAsContent() {
     char chars[255];
     scanf("%[^\n]%*c", chars);
-    this->setContent(chars);
+    return setContent(chars);
 }
 
-String& operator+(const String & s1, const String& s2){
-    return  s1.concat(s2);
+/**
+ * Override of the + operator
+ * @param s1 left operand
+ * @param s2 right operand
+ * @return s1 concatenate with s2
+ */
+String &operator+(const String &s1, const String &s2) {
+    String *result = new String(s1);
+    return result->append(s2);
 }
-String& operator+(const String & s1, const char * c2){
-    return s1.concat(c2)
+
+/**
+ * Override of the + operator
+ * @param s left operand
+ * @param c right operand
+ * @return s concatenate with c
+ */
+String &operator+(const String &s, const char *c) {
+    String *result = new String(s);
+    return result->append(c);
 }
-String& operator+(const char * c1, const String & s2){
-    return s2.concat(c1);
+
+/**
+ * Override of the + operator
+ * @param c left operand
+ * @param s right operand
+ * @return c concatenate with c
+ */
+String &operator+(const char *c, const String &s) {
+    String *result = new String(c);
+    return result->append(s);
 }
 
-String& operator+=(const String & s1, const String & s2);
-String& operator+=(const String & s1, const char * c2);
-String& operator+=(const char * c1, const String & s2);
+/**
+ * Override of the += operator
+ * @param s right operand
+ * @return this concatenate with s
+ */
+String &String::operator+=(const String &s) {
+    return append(s);
+}
 
-bool operator==(const String & s1, const String & s2);
-bool operator==(const String & s1, const char * c2);
-bool operator==(const char * c1, const String & s2);
+/**
+ * Override of the += operator
+ * @param c right operand
+ * @return this concatenate with c
+ */
+String &String::operator+=(const char *c) {
+    return append(c);
+}
 
-std::ostream& operator<<(std::ostream & out, String& s1);
+/**
+ * Override of the == operator
+ * @param s right operand
+ * @return true if this is equal to s, false otherwise
+ */
+bool String::operator==(const String &s) const {
+    return equals(s);
+}
 
-char operator[](const int i, String& s1);
+/**
+ * Override of the == operator
+ * @param c right operand
+ * @return true if this is equal to c, false otherwise
+ */
+bool String::operator==(const char *c) const {
+    return equals(c);
+}
+
+/**
+ * Override of the = operator
+ * @param s the right operand
+ * @return a copy of s
+ */
+String &String::operator=(const String &s) {
+    return setContent(s);
+}
+
+/**
+ * Override of the = operator
+ * @param c the right operand
+ * @return a string containing c
+ */
+String &String::operator=(const char *c) {
+    return setContent(c);
+}
+
+/**
+ * Override of the << operator
+ * @param out the output stream
+ * @param s the string to display
+ * @return the output stream containing the string's display
+ */
+std::ostream &operator<<(std::ostream &out, const String &s) {
+    return out << s.content;
+}
+
+/**
+ * Override of the >> operator
+ * @param in the input stream
+ * @param s the string containing the user's input
+ * @return the input stream containing the string of the user.
+ */
+std::istream &operator>>(std::istream &in, String &s) {
+    char *chars = new char[255];
+    in >> chars;
+    s.setContent(chars);
+    return in;
+}
+
+/**
+ * Override of the [] operator
+ * @param i the index of the char that we want
+ * @return the char that is at the index i
+ */
+const char &String::operator[](const int i) const {
+    return charAt(i);
+}
+

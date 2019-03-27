@@ -8,6 +8,7 @@
 
 class String {
 private:
+    size_t length;
     char * content;
 
 public:
@@ -15,54 +16,49 @@ public:
 
     explicit String(const char chars[]);
 
-    explicit String(const String& string);
+    String(const String& string);
 
     explicit String(const char c);
 
     explicit String(const int i);
 
-    explicit String(const float f);
+    explicit String(const double d);
 
     explicit String(const bool b);
 
     ~String();
 
-    size_t length() const;
-    void print() const;
-    const char & charAt(int i) const;
+    size_t getLength() const;
     const char* getContent() const;
-    bool equals(String* s) const;
+    void print() const;
+    const char & charAt(const int i) const;
 
-    String& concat(String& s);
-    String& concat(const char *s);
-    String& append(String *s);
-    String& append(const char *s);
+    String& append(const String& s);
+    String& append(const char* s);
     bool equals(const char* c) const;
     bool equals(const String& s) const;
-    String& setContent(char chars[]);
-    String& setContent(String* string);
+    String& setContent(const char chars[]);
+    String& setContent(const String& string);
     String& setInputAsContent();
-    String& substring(int i, int j);
+    String& substring(int i, int j) const;
 
     friend String& operator+(const String & s1, const String & s2);
-    friend String& operator+(const String & s1, const char * c2);
-    friend String& operator+(const char * c1, const String & s2);
+    friend String& operator+(const String & s, const char * c);
+    friend String& operator+(const char * c, const String & s);
 
-    String& operator+=(const String & s1);
-    String& operator+=(const char * c1);
+    String& operator+=(const String & s);
+    String& operator+=(const char * c);
 
-    bool operator==(const String & s1) const;
-    bool operator==(const char * c1) const;
+    bool operator==(const String & s) const;
+    bool operator==(const char * c) const;
 
-    String& operator=(const String & s1);
-    String& operator=(const char * c1);
+    String& operator=(const String & s);
+    String& operator=(const char * c);
 
-    friend std::ostream& operator<<(std::ostream & out,const String& s1);
-    friend std::istream& operator>>(std::istream & in, String& s1);
+    friend std::ostream& operator<<(std::ostream & out,const String& s);
+    friend std::istream& operator>>(std::istream & in, String& s);
 
-    char operator[](const int i) const;
-    char& operator[](const int i);
-
+    const char & operator[](const int i) const;
 };
 
 
