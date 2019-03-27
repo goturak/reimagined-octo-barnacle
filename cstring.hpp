@@ -31,8 +31,7 @@ public:
     size_t getLength() const;
     const char* getContent() const;
     void print() const;
-    const char & charAt(int i) const;
-    bool equals(String* s) const;
+    const char & charAt(const int i) const;
 
     String& append(const String& s);
     String& append(const char* s);
@@ -59,7 +58,7 @@ public:
     friend std::ostream& operator<<(std::ostream & out,const String& s);
     friend std::istream& operator>>(std::istream & in, String& s);
 
-    char operator[](const int i) const;
+    const char & operator[](const int i) const;
 };
 
 
