@@ -29,15 +29,13 @@ public:
     ~String();
 
     size_t getLength() const;
+    const char* getContent() const;
     void print() const;
     const char & charAt(int i) const;
-    const char* getContent() const;
     bool equals(String* s) const;
 
-    String& concat(const String& s);
-    String& concat(const char* s);
-    void append(const String& s);
-    void append(const char* s);
+    String& append(const String& s);
+    String& append(const char* s);
     bool equals(const char* c) const;
     bool equals(const String& s) const;
     String& setContent(const char chars[]);

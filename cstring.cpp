@@ -157,7 +157,7 @@ bool String::equals(const char *s) const{
  * appends a String in place
  * @param s the String to append
  */
-void String::append(const String& s){
+String& String::append(const String& s){
     int totalLen = this->length + s.getLength();
 
     char newContent[totalLen];
@@ -165,14 +165,14 @@ void String::append(const String& s){
     std::strcpy(newContent,this->getContent());                    //ON VERRA SI ON CHANGE LE TRUC OU PAS
     std::strcat(newContent,s.getContent());
 
-    this->setContent(newContent);
+    return this->setContent(newContent);
 }
 
 /**
  * appends a const char s in place
  * @param s the const char to append
  */
-void String::append(const char* s){
+String& String::append(const char* s){
     int totalLen = this->length + std::strlen(s);
 
     char newContent[totalLen];
@@ -180,7 +180,7 @@ void String::append(const char* s){
     std::strcpy(newContent,this->getContent());
     std::strcat(newContent,s);
 
-    this->setContent(newContent);
+    return this->setContent(newContent);
 }
 
 /**
@@ -218,37 +218,6 @@ String& String::substring(int i, int j) const{
 
 }
 
-/**
- * concatenates a String s and returns a new String
- * @param s the String to concatenate
- */
-String& String::concat(const String& s){
-    int totalLen = this->length + s.getLength();
-
-    char newContent[totalLen];
-
-    std::strcpy(newContent,this->getContent());
-    std::strcat(newContent,s.getContent());
-
-    return this->setContent(newContent);
-
-}
-
-/**
- * concatenates a const char s and returns a new String
- * @param s the const char to concatenate
- */
-String& String::concat(const char* s){
-    int totalLen = this->length + std::strlen(s);
-
-    char newContent[totalLen];
-
-    std::strcpy(newContent,this->getContent());
-    std::strcat(newContent,s);
-    this->length = totalLen;
-    return this->setContent(newContent);
-
-}
 
 /**
  * Setter that take the input of the user to set the new content of the string
@@ -261,22 +230,23 @@ String& String::setInputAsContent(){
 
 String& operator+(const String& s1, const String& s2){
     String* result = new String(s1);
-    return result->concat(s2);
+    return result->append(s2);
 }
 String& operator+(const String & s, const char * c){
     String* result = new String(s);
-    return result->concat(c);
+    return result->append(c);
 }
 String& operator+(const char * c, const String & s){
     String* result = new String(s);
-    return result->concat(c);
+    return result->append(c);
 }
 
-String& String::operator+=(const String & s){
-    return this->concat(s);
+String& String::operator+=(const String & s) {
+    return this->append(s);
 }
+
 String& String::operator+=(const char * c){
-    return this->concat(c);
+    return this->append(c);
 }
 
 bool String::operator==(const String & s) const{
@@ -287,15 +257,29 @@ bool String::operator==(const char * c) const{
 }
 
 String& String::operator=(const String & s){
-    return *(new String(s));
+    if(this->content == s.getContent()){
+        return *this;
+    }
+    if(this->getLength() != s.getLength()){
+        if(this->content != "") {
+            delete[](this->content);
+        }
+        this->content = new char [s.getLength()];
+    }
+    strcpy(this->content, s.getContent());
+    return *this;
 }
 String& String::operator=(const char * c){
-    return *(new String(c));
+    if(this->getLength() != strlen(c)){
+        delete[](this->content);
+        this->content = new char [strlen(c)];
+    }
+    strcpy(this->content, c);
+    return *this;
 }
 
-std::ostream& operator<<(std::ostream & out,const String& s){
-    out << s.getContent();
-    return out;
+std::ostream& operator<<(std::ostream & out, const String& s){
+    return out << s.content;
 }
 std::istream& operator>>(std::istream & in, String& s){
     char chars [255];
